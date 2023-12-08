@@ -25,7 +25,7 @@ const Home = () => {
       }, []);
   return (
     <>
-    <h1>Assignment</h1>
+  
     <TicketList tickets={data.tickets} users={data.users}/>
       
     </>
