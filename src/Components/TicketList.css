@@ -1,3 +1,62 @@
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #F4F5F8;
+}
+.displaybtn button{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  margin: 18px 4px 0 22px;
+  background-color: #fff;
+  border:none;
+  box-shadow:  0px 0 10px #c2bfbf;
+  border-radius: 5px;
+  font-size:1rem;
+  font-weight: 600;
+}
+.groups{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin: 10px 0 0 20px;
+  padding: 8px;
+  background-color: #fff;
+  border:none;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #c1bdbd;
+  width: 20rem;
+
+}
+.groups .group{
+  display: flex;
+  margin: 4px;
+  padding: 4px;
+  gap: 8rem;
+}
+.groups select{
+  border:1px solid #ccc;
+  border-radius: 5px;
+  width: 6rem;
+  padding: 4px;
+}
+
+.groups .sort{
+  display: flex;
+  margin: 4px;
+  padding: 4px;
+  gap: 8rem;
+}
+.displaybtn button img{
+  width: 20px;
+  height: 20px;
+}
 .tickets {
   display: flex;
   flex-direction: row;

@@ -12,6 +12,8 @@ import low from '../assets/low.svg';
 import medium from '../assets/medium.svg';
 import high from '../assets/high.svg';
 import urgent from '../assets/urgent.svg';
+import advertising from '../assets/advertising.png';
+import down from '../assets/down.png';
 
 const getIconForStatus = (status) => {
   switch (status.toLowerCase()) {
@@ -147,29 +149,28 @@ const TicketList = ({ tickets, users }) => {
 
   return (
     <div>
-      <div>
-
-        <button onClick={toggleVisible}>Display</button>
+      <div className='displaybtn'>
+        <button onClick={toggleVisible}> <img src={advertising} alt="Display" /> Display <ion-icon name="chevron-down-outline"></ion-icon> </button>
       </div>
 
       {visible &&
-        <>
-          <div>
-            <label htmlFor="grouping">Group By: </label>
+        <div className='groups'>
+          <div className='group'>
+            <label htmlFor="grouping">Grouping: </label>
             <select id="grouping" value={groupingOption} onChange={handleGroupingChange}>
-              <option value="status">By Status</option>
-              <option value="priority">By Priority</option>
-              <option value="user">By User</option>
+              <option value="status">Status</option>
+              <option value="priority">Priority</option>
+              <option value="user">User</option>
             </select>
           </div>
-          <div>
-            <label htmlFor="sorting">Sort By: </label>
+          <div className='sort'>
+            <label htmlFor="sorting">Ordering: </label>
             <select id="sorting" value={sortingOption} onChange={handleSortingChange}>
               <option value="priority">Priority</option>
               <option value="title">Title</option>
             </select>
           </div>
-        </>
+        </div>
       }
       <div className='tickets'>
         {groupingOption === 'status' &&

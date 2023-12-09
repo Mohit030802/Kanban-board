@@ -4,7 +4,7 @@
   font-weight: 400;
 
 
-  
+  background-color: #f1ecec;
 
 
   font-synthesis: none;
@@ -21,6 +21,7 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #000;
 }
 
 h1 {
