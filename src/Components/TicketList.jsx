@@ -64,14 +64,34 @@ const getIconForPriority = (priority) => {
 
 const TicketList = ({ tickets, users }) => {
   const [groupingOption, setGroupingOption] = useState('status');
+  const [sortingOption, setSortingOption] = useState('priority');
+  const [visible, setVisible] = useState(false)
+  const toggleVisible = () => {
+    setVisible(!visible)
 
+  }
   const handleGroupingChange = (event) => {
     setGroupingOption(event.target.value);
+  };
+
+  const handleSortingChange = (event) => {
+    setSortingOption(event.target.value);
   };
 
   if (!tickets || !users) {
     return <div style={{ textAlign: 'center', marginTop: '20px' }}>Loading...</div>;
   }
+
+  const sortTickets = (tickets) => {
+    switch (sortingOption) {
+      case 'priority':
+        return tickets.sort((a, b) => parseInt(b.priority, 10) - parseInt(a.priority, 10));
+      case 'title':
+        return tickets.sort((a, b) => a.title.localeCompare(b.title));
+      default:
+        return tickets;
+    }
+  };
 
   const organizedTickets = tickets.reduce((acc, ticket) => {
     const { status, userId, title, tag, id, priority } = ticket;
@@ -124,16 +144,33 @@ const TicketList = ({ tickets, users }) => {
     return acc;
   }, {});
 
+
   return (
     <div>
       <div>
-        <label htmlFor="grouping">Group By: </label>
-        <select id="grouping" value={groupingOption} onChange={handleGroupingChange}>
-          <option value="status">By Status</option>
-          <option value="priority">By Priority</option>
-          <option value="user">By User</option>
-        </select>
+
+        <button onClick={toggleVisible}>Display</button>
       </div>
+
+      {visible &&
+        <>
+          <div>
+            <label htmlFor="grouping">Group By: </label>
+            <select id="grouping" value={groupingOption} onChange={handleGroupingChange}>
+              <option value="status">By Status</option>
+              <option value="priority">By Priority</option>
+              <option value="user">By User</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="sorting">Sort By: </label>
+            <select id="sorting" value={sortingOption} onChange={handleSortingChange}>
+              <option value="priority">Priority</option>
+              <option value="title">Title</option>
+            </select>
+          </div>
+        </>
+      }
       <div className='tickets'>
         {groupingOption === 'status' &&
           Object.entries(organizedTickets).map(([status, { tickets, count }]) => (
@@ -149,7 +186,7 @@ const TicketList = ({ tickets, users }) => {
                 </div>
               </div>
               <ul className='card'>
-                {tickets.map((ticket, index) => (
+                {sortTickets(tickets).map((ticket, index) => (
                   <div key={index} className='cardEle'>
                     <li>
                       <div className='cardID'>
@@ -186,7 +223,7 @@ const TicketList = ({ tickets, users }) => {
                 </div>
               </div>
               <ul className='card'>
-                {tickets.map((ticket, index) => (
+                {sortTickets(tickets).map((ticket, index) => (
                   <div key={index} className='cardEle'>
                     <li>
                       <div className='cardID'>
@@ -220,7 +257,7 @@ const TicketList = ({ tickets, users }) => {
                 </div>
               </div>
               <ul className='card'>
-                {tickets.map((ticket, index) => (
+                {sortTickets(tickets).map((ticket, index) => (
                   <div key={index} className='cardEle'>
                     <li>
                       <div className='cardID'>
