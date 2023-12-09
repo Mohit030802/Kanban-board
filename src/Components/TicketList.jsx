@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './TicketList.css';
 import profile from '../assets/profile.svg';
 import discaimer from '../assets/caution-sign.png';
@@ -68,16 +68,33 @@ const TicketList = ({ tickets, users }) => {
   const [groupingOption, setGroupingOption] = useState('status');
   const [sortingOption, setSortingOption] = useState('priority');
   const [visible, setVisible] = useState(false)
+  useEffect(() => {
+    const storedGroupByOption = localStorage.getItem('groupByOption');
+    const storedSortByOption = localStorage.getItem('sortByOption');
+
+    if (storedGroupByOption) {
+      setGroupingOption(storedGroupByOption);
+    }
+
+    if (storedSortByOption) {
+      setSortingOption(storedSortByOption);
+    }
+  }, []);
   const toggleVisible = () => {
     setVisible(!visible)
 
   }
   const handleGroupingChange = (event) => {
-    setGroupingOption(event.target.value);
+    const selectedGroupByOption = event.target.value;
+    setGroupingOption(selectedGroupByOption);
+    localStorage.setItem('groupByOption', selectedGroupByOption);
+    
   };
 
   const handleSortingChange = (event) => {
-    setSortingOption(event.target.value);
+    const selectedSortByOption = event.target.value;
+    setSortingOption(selectedSortByOption);
+    localStorage.setItem('sortByOption', selectedSortByOption);
   };
 
   if (!tickets || !users) {
@@ -150,7 +167,7 @@ const TicketList = ({ tickets, users }) => {
   return (
     <div>
       <div className='displaybtn'>
-        <button onClick={toggleVisible}> <img src={advertising} alt="Display" /> Display <ion-icon name="chevron-down-outline"></ion-icon> </button>
+        <button onClick={toggleVisible}> <img src={advertising} alt="Display" /> Display {!visible ? <ion-icon name="chevron-down-outline"></ion-icon>:<ion-icon name="chevron-up-outline"></ion-icon> } </button>
       </div>
 
       {visible &&
